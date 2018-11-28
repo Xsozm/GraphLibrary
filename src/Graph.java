@@ -13,12 +13,9 @@ import java.util.Vector;
 
 public class Graph {
 	protected String name ; 
-	protected String version ;
-	
-	
-	HashMap<Vertex, LinkedList<Edge>> Adj ;//vertices connected 
-	
-	LinkedList<Vertex>Vertices;
+	protected String version ;	
+	private HashMap<Vertex, LinkedList<Edge>> Adj ;//vertices connected 
+	private LinkedList<Vertex>Vertices;
 	
 	
 	public String getLibraryName( ){
@@ -29,7 +26,15 @@ public class Graph {
 		return version ;
 	}
 	
-	public void addvertex(Vertex v) {
+	public void addvertex(Vertex v) throws GraphException {
+		boolean found =false;
+		for(Vertex vv:Adj.keySet()) {
+			if(vv._strUniqueID.toString().equals(v._strUniqueID.toString()))
+				found=true;
+		}
+		if(found) {
+			throw new GraphException("This Vertex already exists ");
+		}
 		Adj.put(v, new LinkedList<Edge>());//insert new node with no children 
 		
 
@@ -37,6 +42,15 @@ public class Graph {
 	
 	public void insertVertex(StringBuffer strUniqueID,StringBuffer strData)	throws GraphException{
 		Vertex v = new Vertex(strUniqueID,strData);
+		boolean found =false;
+		for(Vertex vv:Adj.keySet()) {
+			if(vv._strUniqueID.toString().equals(v._strUniqueID.toString()))
+				found=true;
+		}
+		if(found) {
+			throw new GraphException("This Vertex already exists ");
+		}
+
 
 		Adj.put(v, new LinkedList<Edge>());//insert new node with no children 
 
@@ -59,11 +73,6 @@ public class Graph {
 		}
 
 		Edge E = new Edge(strEdgeUniqueID, strEdgeData, nEdgeCost, First, Second);
-//		if(Adj.get(First)==null)
-//			Adj.put(First,new LinkedList<Edge>());
-//			
-//		if(Adj.get(Second)==null)
-//			Adj.put(Second,new LinkedList<Edge>());
 		
 		Adj.get(First).add(E);
 		Adj.get(Second).add(E);
@@ -72,8 +81,10 @@ public class Graph {
 	}
 	
 	public void removeVertex(StringBuffer strVertexUniqueID) throws	GraphException{
+		Vertex vertex =null;
 		for(Vertex v:Adj.keySet()) {
 			if(v._strUniqueID.toString().equals(strVertexUniqueID.toString())) {
+				vertex = v; 
 				Adj.put(v, null);
 			}else {
 				LinkedList<Edge>L = Adj.get(v);
@@ -83,12 +94,17 @@ public class Graph {
 					}
 				}
 			}
+			if(vertex==null) {
+				throw new GraphException("This is Vertex doesn't exist in the graph");
+			}
 			
 		}
+		Adj.remove(vertex);
+
 	}
 	
 	
-	/////////
+	
 	public void removeEdge(StringBuffer strEdgeUniqueID) throws	GraphException{
 		for(Vertex v:Adj.keySet()) {
 			LinkedList<Edge>L = Adj.get(v);
@@ -168,7 +184,10 @@ public class Graph {
 	}
 	//////////////////////////
 	public Vertex opposite(StringBuffer strVertexUniqueID,StringBuffer strEdgeUniqueID) throws GraphException{
+		Vertex vertex = null; 
 		for(Vertex v:Adj.keySet()) {
+			if(v._strUniqueID.toString().equals(strVertexUniqueID.toString())) {
+				vertex= v ;
 			for(Edge e:Adj.get(v)) {
 				if(e._strUniqueID.toString().equals(strEdgeUniqueID.toString())) {
 					if(e.First._strUniqueID.toString().equals(strVertexUniqueID.toString()))
@@ -177,15 +196,20 @@ public class Graph {
 						return e.First;
 				}
 			}
-		}		
-		return null;
+		}
+		}
+		if(vertex==null) {
+			throw new GraphException("This is Vertex doesn't exist in the graph");
+
+		}
+		throw new GraphException("This is Edge isn't connected to this vertex");
+
 	}
 	
 	/////////////////////////
-	public void mydfs(HashMap<Vertex, Boolean>Visited , Vertex vertex ,Visitor visitor) {
+	private void mydfs(HashMap<Vertex, Boolean>Visited , Vertex vertex ,Visitor visitor) {
 		Visited.put(vertex, true);
 		visitor.visit(vertex);
-		System.out.println(vertex._strUniqueID);
 		
 		for(Edge e:Adj.get(vertex)) {
 			Vertex v1 = e.First;
@@ -295,7 +319,7 @@ public class Graph {
 	        });
 	    }
 	    
-	    public  static double calDistance(Vertex v1, Vertex v2) {
+	    private  static double calDistance(Vertex v1, Vertex v2) {
 	        double xdist = v2._nX - v1._nX;
 	        double ydist = v2._nY - v1._nY;
 	        return Math.hypot(xdist, ydist);
@@ -459,7 +483,7 @@ public class Graph {
 	}
 	public void show() {
 		for(Vertex v:Adj.keySet()) {
-			System.out.println(v);
+			System.out.println(v._strUniqueID);
 		}
 
 	}
@@ -533,7 +557,7 @@ public class Graph {
 		 this.v2=v2;
 	 }
 	 
-	 public  double calDistance() {
+	 protected  double calDistance() {
 	        double xdist = v2._nX - v1._nX;
 	        double ydist = v2._nY - v1._nY;
 	        return Math.hypot(xdist, ydist);
