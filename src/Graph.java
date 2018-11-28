@@ -71,6 +71,9 @@ public class Graph {
 			}
 			
 		}
+		if(First ==null || Second==null) {
+			throw new GraphException("The Vertex Doesn't Exist");
+		}
 
 		Edge E = new Edge(strEdgeUniqueID, strEdgeData, nEdgeCost, First, Second);
 		
@@ -106,14 +109,19 @@ public class Graph {
 	
 	
 	public void removeEdge(StringBuffer strEdgeUniqueID) throws	GraphException{
+		boolean found =false;
 		for(Vertex v:Adj.keySet()) {
 			LinkedList<Edge>L = Adj.get(v);
 			for(Edge e :L) {
-				if(e._strUniqueID.toString().equals(strEdgeUniqueID.toString()))
+				if(e._strUniqueID.toString().equals(strEdgeUniqueID.toString())) {
+					found=true;
 					L.remove(e);
-
+				}
 			}
 
+		}
+		if(!found) {
+			throw new GraphException("This Edge Doesn't Exist");
 		}
 		
 	}
@@ -124,8 +132,12 @@ public class Graph {
 		Vector<Edge> Vec = new Vector<Edge>();
 		LinkedList<Edge> L =null;
 		for(Vertex v:Adj.keySet()) {
-			if(v._strUniqueID.toString().equals(strVertexUniqueID.toString()))
+			if(v._strUniqueID.toString().equals(strVertexUniqueID.toString())) 
 				L= Adj.get(v);
+			
+		}
+		if(L==null) {
+			throw new GraphException("This Vertex doesn't exist");
 		}
 		if(L!=null) {
 			for(Edge e :L) {
@@ -148,6 +160,7 @@ public class Graph {
 		for(Vertex v:Adj.keySet()) {
 			Vec.add(v);
 		}
+		//no need to throw excption it will be an empty vector 
 		return Vec;
 	}
 	//////////////////////
@@ -162,6 +175,7 @@ public class Graph {
 		
 		for(Edge e:Set)
 			Vec.add(e);
+		//no exception needed 
 		return Vec;
 		
 	}
@@ -179,7 +193,9 @@ public class Graph {
 
 				}
 		}
-		return null;
+		
+			throw new GraphException("Edge Doesn't Exist");
+	
 		
 	}
 	//////////////////////////
@@ -239,6 +255,9 @@ public class Graph {
 			Visited.put(v, false);
 			
 		}
+		if(vstart==null) {
+			throw new GraphException("The Vertex Doesn't Exist");
+		}
 
 			
 		mydfs(Visited,vstart,visitor);
@@ -259,6 +278,10 @@ public class Graph {
 			Visited.put(v, false);
 			
 		}
+		if(vstart==null) {
+			throw new GraphException("The Vertex Doesn't Exist");
+		}
+		
 		
 		 LinkedList<Vertex> queue = new LinkedList<Vertex>(); 
 		  
