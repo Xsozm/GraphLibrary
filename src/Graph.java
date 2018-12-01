@@ -40,8 +40,8 @@ public class Graph {
 
 	}
 	
-	public void insertVertex(StringBuffer strUniqueID,StringBuffer strData)	throws GraphException{
-		Vertex v = new Vertex(strUniqueID,strData);
+	public void insertVertex(StringBuffer strUniqueID,StringBuffer strData , int x ,int y)	throws GraphException{
+		Vertex v = new Vertex(strUniqueID,strData,x,y);
 		boolean found =false;
 		for(Vertex vv:Adj.keySet()) {
 			if(vv._strUniqueID.toString().equals(v._strUniqueID.toString()))
@@ -294,7 +294,6 @@ public class Graph {
 	        { 
 	            // Dequeue a vertex from queue and print it 
 	            Vertex s = queue.poll(); 
-	            System.out.print(s._strUniqueID+" "); 
 	  
 	            
 	            for (Edge e :Adj.get(s)) 
@@ -527,17 +526,17 @@ public class Graph {
 //
 //		g.show();
 		Graph g = new Graph( );
-		Vertex v1 = new Vertex(new StringBuffer("1") ,new StringBuffer("1" ));
-		Vertex v2 = new Vertex(new StringBuffer("2") ,new StringBuffer("2" ));
-		Vertex v3 = new Vertex(new StringBuffer("3") ,new StringBuffer("3" ));
-		Vertex v4 = new Vertex(new StringBuffer("4") ,new StringBuffer("4" ));
-		Vertex v5 = new Vertex(new StringBuffer("5") ,new StringBuffer("5" ));
+		Vertex v1 = new Vertex(new StringBuffer("1") ,new StringBuffer("1" ),1,9);
+		Vertex v2 = new Vertex(new StringBuffer("2") ,new StringBuffer("2" ),0,2);
+		Vertex v3 = new Vertex(new StringBuffer("3") ,new StringBuffer("3" ),3,4);
+		Vertex v4 = new Vertex(new StringBuffer("4") ,new StringBuffer("4" ),5,10);
+		Vertex v5 = new Vertex(new StringBuffer("5") ,new StringBuffer("5" ),5,10);
 		
-		v1.set_Cordinates(1, 9);
-		v2.set_Cordinates(0, 2);
-		v3.set_Cordinates(3, 4);
-		v4.set_Cordinates(5, 10);
-		v5.set_Cordinates(6, 10);
+//		v1.set_Cordinates(1, 9);
+//		v2.set_Cordinates(0, 2);
+//		v3.set_Cordinates(3, 4);
+//		v4.set_Cordinates(5, 10);
+//		v5.set_Cordinates(6, 10);
 
 		
 		g.addvertex(v1);

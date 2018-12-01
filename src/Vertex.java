@@ -40,9 +40,11 @@ public class Vertex  implements Comparable<Vertex>{
 		this._nY=y;
 	}
 	
-	public Vertex(StringBuffer _strUniqueID,StringBuffer _strData) {
+	public Vertex(StringBuffer _strUniqueID,StringBuffer _strData,int x ,int y) {
 		this._strUniqueID= _strUniqueID ;
 		this._strData=_strData;
+		this._nX=x;
+		this._nY=y;
 				
 	}
 
