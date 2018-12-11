@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;DisjointSet.java&apos; to &apos;DisjointUnionSets.java&apos;&#x0A;- Original project: &apos;Graph Library&apos;&#x0A;- Original element: &apos;DisjointSet.java&apos;&#x0A;- Renamed element: &apos;DisjointUnionSets.java&apos;" description="Rename compilation unit &apos;DisjointSet.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;{DisjointSet.java" name="DisjointUnionSets.java" references="false" stamp="1544213585764" version="1.0"/>
+</session>
