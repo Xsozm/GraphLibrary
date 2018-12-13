@@ -1,0 +1,19 @@
+LOSING_WAIT_NONE
+capability sys_admin,
+
+include <abstractions/nameservice>
+
+# DBus accesses
+include <abstractions/dbus-strict>
+
+dbus (send)
+   bus=system
+   path=/org/freedesktop/DBus
+   interface=org.freedesktop.DBus
+   member={Request,Release}Name
+   peer=(name=org.freedesktop.DBus, label=unconfined),
+
+# Allow binding the service to the requested connection name
+dbus (bind)
+    bus=system
+    name="org.freedesktop.ModemManager1",

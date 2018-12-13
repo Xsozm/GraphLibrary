@@ -1,0 +1,63 @@
+               {Install Inf Section [HdAudModel.CoInstallers]}
+     inf:                     {Install Inf Section [HdAudModel.CoInstallers] exit (0x00000000)}
+     dvi:                     Co-installers registered.
+     dvi:                     {Install INTERFACES}
+     dvi:                          Installing section [HdAudModel.Interfaces]
+     dvi:                     {Install INTERFACES exit 00000000}
+     dvi:                {Install FILES exit (0x00000000)}
+     dvi:           Default installer: Exit
+     dvi:      {DIF_INSTALLDEVICEFILES - exit(0x00000000)} 01:21:05.053
+     ndv:      Pruning file queue...
+     dvi:      {_SCAN_FILE_QUEUE}
+     flq:           ScanQ flags=620
+     flq:                SPQ_SCAN_PRUNE_COPY_QUEUE
+     flq:                SPQ_SCAN_FILE_COMPARISON
+     flq:                SPQ_SCAN_ACTIVATE_DRP
+     flq:           ScanQ number of copy nodes=5
+     flq:           ScanQ action=200 DoPruning=32
+     flq:           ScanQ end Validity flags=620 CopyNodes=5
+     dvi:      {_SCAN_FILE_QUEUE exit(0, 0x00000000)}
+     ndv:      Committing file queue...
+     flq:      {_commit_file_queue}
+     flq:           CommitQ DelNodes=0 RenNodes=0 CopyNodes=5
+     flq:           {SPFILENOTIFY_STARTQUEUE}
+     flq:           {SPFILENOTIFY_STARTQUEUE - exit(0x00000001)}
+     flq:           {_commit_copy_subqueue}
+     flq:                subqueue count=5
+     flq:                {SPFILENOTIFY_STARTSUBQUEUE}
+     flq:                {SPFILENOTIFY_STARTSUBQUEUE - exit(0x00000001)}
+     flq:                source media:
+     flq:                     Description  - [windows cd]
+     flq:                     SourcePath   - [C:\Windows\System32\DriverStore\FileRepository\hdaudio.inf_amd64_neutral_cb351613c92a9f31]
+     flq:                     SourceFile   - [HdAudio.sys]
+     flq:                     Flags        - 0x00000000
+     flq:                {SPFQNOTIFY_NEEDMEDIA}
+     flq:                     {SPFILENOTIFY_NEEDMEDIA}
+     flq:                     {SPFILENOTIFY_NEEDMEDIA - exit(0x00000001)}
+     flq:                {SPFQNOTIFY_NEEDMEDIA - returned 0x00000001}
+     flq:                source media: SPFQOPERATION_DOIT
+     flq:                {_commit_copyfile}
+     flq:                     {SPFILENOTIFY_STARTCOPY}
+     ndv:                          Saving LastKnownGood file C:\Windows\system32\drivers\HdAudio.sys (copy)
+     flq:                     {SPFILENOTIFY_STARTCOPY - exit(0x00000001)}
+     flq:                     CopyFile: 'C:\Windows\System32\DriverStore\FileRepository\hdaudio.inf_amd64_neutral_cb351613c92a9f31\HdAudio.sys'
+     flq:                           to: 'C:\Windows\system32\drivers\SET15F0.tmp'
+     cpy:                     CopyFile Drp is active
+     cpy:                     Source File 'C:\Windows\system32\drivers\SET15F0.tmp' is signed NT5 Crypto.
+     cpy:                     DrpGetFileProt Status=2 dwClass=0
+     flq:                     MoveFile: 'C:\Windows\system32\drivers\SET15F0.tmp'
+     flq:                           to: 'C:\Windows\system32\drivers\HdAudio.sys'
+     cpy:                     DrpSetRegFileProt 'C:\Windows\system32\drivers\HdAudio.sys' Status=0 Class=Inbox Windows protected
+     flq:                     Caller applied security to file 'C:\Windows\system32\drivers\HdAudio.sys'.
+     flq:                     {SPFILENOTIFY_ENDCOPY}
+     flq:                     {SPFILENOTIFY_ENDCOPY - exit(0x00000001)}
+     flq:                {_commit_copyfile exit OK}
+     flq:                source media:
+     flq:                     Description  - [windows cd]
+     flq:                     SourcePath   - [C:\Windows\System32\DriverStore\FileRepository\wdmaudio.inf_amd64_neutral_423894ded0ba8fdf]
+     flq:                     SourceFile   - [drmk.sys]
+     flq:                     Flags        - 0x00000000
+     flq:                {SPFQNOTIFY_NEEDMEDIA}
+     flq:                     {SPFILENOTIFY_NEEDMEDIA}
+     flq:                     {SPFILENOTIFY_NEEDMEDIA - exit(0x00000001)}
+     flq:                {SPFQNOTIFY

@@ -1,0 +1,61 @@
+sTapi'.
+     inf:                          AddReg=Reg-NdisTapi  (netrasa.inf line 310)
+     inf:                     {Install Inf Section [Ndi-Mp-Bh.Services] exit(0x00000000)}
+!    dvi:                     Unable to update reflected section names for: netrasa.inf
+!    dvi:                     Error 1168: Element not found.
+     dvi:                {Install DEVICE exit (0x00000000)}
+     dvi:                Writing common driver property settings.
+     dvi:                     DriverDescription=WAN Miniport (Network Monitor)
+     dvi:                     DeviceDisplayName=WAN Miniport (Network Monitor)
+     dvi:                Install Device: Removing device sub-tree. 01:20:20.313
+     dvi:                Install Device: Removing device sub-tree completed. 01:20:20.406
+     dvi:                Install Device: Restarting device. 01:20:20.406
+     dvi:                Install Device: Restarting device completed. 01:20:20.531
+     cci:                [NCI BEGIN BINDINGS UPDATE for ROOT\MS_NDISWANBH\0000]
+     cci:                NCI: INetCfg Installer Interface asking for write lock. 01:20:20.609
+     cci:                NCI: INetCfg Installer Interface acquired write lock. 01:20:20.609
+     cci:                NCI: Init Notify Object for ms_ndiscap
+     cci:                NCI: Init Notify Object for ms_ndiscap complete
+     cci:                NCI: Init Notify Object for ms_server
+     cci:                NCI: Init Notify Object for ms_server complete
+     cci:                NCI: Init Notify Object for ms_steelhead
+     cci:                NCI: Init Notify Object for ms_steelhead complete
+     cci:                NCI: Init Notify Object for ms_rassrv
+     cci:                NCI: Init Notify Object for ms_rassrv complete
+     cci:                NCI: Init Notify Object for ms_msclient
+     cci:                NCI: Init Notify Object for ms_msclient complete
+     cci:                NCI: Init Notify Object for ms_tcpip6
+     cci:                NCI: Init Notify Object for ms_tcpip6 complete
+     cci:                NCI: Init Notify Object for ms_tcpip
+     cci:                NCI: Init Notify Object for ms_tcpip complete
+     cci:                NCI: Init Notify Object for ms_pppoe
+     cci:                NCI: Init Notify Object for ms_pppoe complete
+     cci:                NCI: Init Notify Object for ms_pptp
+     cci:                NCI: Init Notify Object for ms_pptp complete
+     cci:                NCI: Init Notify Object for ms_l2tp
+     cci:                NCI: Init Notify Object for ms_l2tp complete
+     cci:                NCI: Init Notify Object for ms_ndiswan
+     cci:                NCI: Init Notify Object for ms_ndiswan complete
+     cci:                NCI: Init Notify Object for ms_agilevpn
+     cci:                NCI: Init Notify Object for ms_agilevpn complete
+     cci:                NCI: Init Notify Object for ms_sstp
+     cci:                NCI: Init Notify Object for ms_sstp complete
+     cci:                [NCI: BEGIN WRITING CONFIG BLOB]
+     cci:                [NCI: END WRITING CONFIG BLOB]
+     cci:                [NCI: BEGIN WRITING CONFIG BLOB]
+     cci:                NCI: Number of components 37
+     cci:                NCI: Number of stack entries 26
+     cci:                NCI: Number of disabled bindpaths 0
+     cci:                NCI: Number of components being referenced 28
+     cci:                NCI: cbBuf - 4432, cbBufIn - 4432
+     cci:                [NCI: END WRITING CONFIG BLOB]
+     cci:                [NCI BEGIN STATIC BINDINGS]
+     cci:                [NCI END STATIC BINDINGS]
+     cci:                [NCI BEGIN NOTIFY APPLY REGISTRY CHANGES]
+     cci:                [NCI END NOTIFY APPLY REGISTRY CHANGES]
+     cci:                [NCI BEGIN UNBIND DELETED BINDINGS]
+     cci:                [NCI END UNBIND DELETED BINDINGS] Reboot = 0
+     cci:                [NCI BEGIN STOP SERVICES]
+     cci:                [NCI END STOP SERVICES]
+     cci:                [NCI BEGIN UNINSTALL COMPONENTS]
+     cci:             

@@ -1,5 +1,5 @@
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
 	
 	protected StringBuffer _strUniqueID, //a unique id identifying edge
 	_strData;	//data associated with this edge.
@@ -36,4 +36,10 @@ public class Edge {
 		this._strData=_strData;
 	}
 
+	@Override
+	public int compareTo(Edge o) {
+		return this._nEdgeCost-o._nEdgeCost;
+	}
+
 }
+

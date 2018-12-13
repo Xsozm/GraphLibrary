@@ -1,0 +1,15 @@
+
+# Description: Allow using NetworkManager service. Reserved because this gives
+#  privileged access to the NetworkManager service.
+# Usage: reserved
+
+# Can communicate with DBus system service
+connect
+getsockname
+recv
+recvmsg
+recvfrom
+send
+sendto
+sendmsg
+socket

@@ -1,0 +1,26 @@
+
+[+1.21s] DEBUG: Seat seat0 changes active session to c1
+[+1.21s] DEBUG: Session c1 is already active
+[+1.38s] DEBUG: Greeter connected version=1.18.2 resettable=false
+[+1.43s] DEBUG: User /org/freedesktop/Accounts/User108 added
+[+1.62s] DEBUG: Greeter start authentication for hazemzz
+[+1.62s] DEBUG: Session pid=2981: Started with service 'lightdm', username 'hazemzz'
+[+1.62s] DEBUG: Session pid=2981: Authentication complete with return value 0: Success
+[+1.62s] DEBUG: Authenticate result for user hazemzz: Success
+[+1.62s] DEBUG: User hazemzz authorized
+[+2.19s] DEBUG: Greeter sets language en_US
+[+2.38s] DEBUG: Greeter requests session xubuntu
+[+2.38s] DEBUG: Seat seat0: Stopping greeter; display server will be re-used for user session
+[+2.38s] DEBUG: Session pid=2893: Sending SIGTERM
+[+2.39s] DEBUG: Greeter closed communication channel
+[+2.39s] DEBUG: Session pid=2893: Exited with return value 0
+[+2.39s] DEBUG: Seat seat0: Session stopped
+[+2.39s] DEBUG: Seat seat0: Greeter stopped, running session
+[+2.39s] DEBUG: Registering session with bus path /org/freedesktop/DisplayManager/Session0
+[+2.39s] DEBUG: Session pid=2981: Running command /usr/sbin/lightdm-session startxfce4
+[+2.39s] DEBUG: Creating shared data directory /var/lib/lightdm-data/hazemzz
+[+2.39s] DEBUG: Session pid=2981: Logging to .xsession-errors
+[+2.44s] DEBUG: Activating VT 7
+[+2.44s] DEBUG: Activating login1 session c2
+[+2.44s] DEBUG: Seat seat0 changes active session to c2
+[+2.44s] DEBUG: Session c2 is already active

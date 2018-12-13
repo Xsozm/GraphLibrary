@@ -1,0 +1,17 @@
+ (send)
+    bus=session
+    path=/
+    interface=org.freedesktop.DBus
+    member=ListNames
+    peer=(name="org.freedesktop.DBus", label="unconfined"),
+
+# Communicate with the mpris player
+dbus (send)
+    bus=session
+    interface=org.freedesktop.DBus.Properties
+    path=/org/mpris/MediaPlayer2
+    peer=(label=###SLOT_SECURITY_TAGS###),
+dbus (send)
+    bus=session
+    path=/org/mpris/MediaPlayer2
+    peer=(label=###SLOT_SECURITY_TAGS###),

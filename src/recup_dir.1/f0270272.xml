@@ -1,0 +1,16 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<WindowsRE version="1.0">
+    <WinreBCD id="{30a3a872-6366-11e5-9e75-c4ff3b6ef825}"/>
+    <WinreLocation path="\Recovery\30a3a872-6366-11e5-9e75-c4ff3b6ef825" id="834014142" offset="105906176" guid="{00000000-0000-0000-0000-000000000000}"/>
+    <ImageLocation path="" id="0" offset="0" guid="{00000000-0000-0000-0000-000000000000}"/>
+    <OsInstallLocation path="" id="0" offset="0" guid="{00000000-0000-0000-0000-000000000000}"/>
+    <InstallState state="1"/>
+    <OsInstallAvailable state="0"/>
+    <WinREStaged state="0"/>
+    <OperationParam path=""/>
+    <OsBuildVersion path="7600.16385.amd64fre.win7_rtm.090713-1255"/>
+    <OemTool state="0"/>
+    <BootKey state="0"/>
+    <IsServer state="0"/>
+    <ScheduledOperation state="4"/>
+</WindowsRE>

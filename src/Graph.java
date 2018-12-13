@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.Stack;
 import java.util.Vector;
 
 public class Graph {
@@ -499,6 +500,412 @@ public class Graph {
 			
 		
 	}
+	
+	public Vector<PathSegment> minSpanningTree() throws GraphException{
+
+       int size = this.vertices().size();
+       StringBuffer[]arr = new StringBuffer[size];
+       int i=0;
+       for(Vertex v:this.vertices()) {
+    	   arr[i++]=v._strUniqueID;
+       }
+       
+       Vector<Edge> Edges = this.edges();
+  
+      
+        Collections.sort(Edges); 
+//        System.out.println(Edges.get(0)._nEdgeCost);
+//        System.out.println(Edges.get(1)._nEdgeCost);
+//
+//  
+
+       Vector<PathSegment> ans = new Vector<PathSegment>();
+       DisjointUnionSets DJ =new DisjointUnionSets(arr);
+        for(Edge edge:Edges) 
+        { 
+           Vertex v1 =edge.First;
+           Vertex v2 =edge.Second;
+
+           
+           StringBuffer x = DJ.find(v1._strUniqueID); 
+           StringBuffer y = DJ.find(v2._strUniqueID); 
+  
+            //no cycle
+            if (!x.toString().equals(y)) 
+            { 
+                ans.add(new PathSegment(null, edge)) ;
+                DJ.union(x, y);
+            } 
+            // Else discard the next_edge 
+        } 
+        for(PathSegment ps :ans)
+        	System.out.println(ps._edge._strUniqueID);
+        return ans;
+
+	}
+
+
+	public Vector<Vector<PathSegment>> findShortestPathBF(StringBuffer strStartVertexUniqueID) throws GraphException{
+		 int V = this.vertices().size();
+		 int  E = this.edges().size(); 
+	     HashMap<StringBuffer,Integer> dist = new HashMap<>();
+	     HashMap<Vertex,Vertex>Parent = new HashMap<>();
+	     
+	     Vertex ans = null;
+	     for(Vertex v :this.vertices())
+	    	  if(v._strUniqueID.toString().equals(strStartVertexUniqueID.toString())) {
+	    		  ans=v;
+	    	  }
+	     if(ans==null)
+	    	 throw new GraphException("Vertex is not found");
+	     for(Edge e :this.edges()) {
+	    	 if(e._nEdgeCost<0) {
+	               	throw new GraphException("Can't solve this with Negative Cycles");
+	                
+	    	 }
+	     }
+	     
+	        for (Vertex v :this.vertices()) 
+	            dist.put(v._strUniqueID,Integer.MAX_VALUE); 
+	       dist.put(ans._strUniqueID, 0);
+	       Parent.put(ans, ans);
+	      
+	      //relaxing  
+	        for (int i=1; i<V; ++i) 
+	        { 
+	            for (Edge e :this.edges()) 
+	            { 
+	                StringBuffer u = e.First._strUniqueID;
+	                StringBuffer v = e.Second._strUniqueID;
+	                int weight = e._nEdgeCost;
+	                
+	                if (dist.get(u)!=Integer.MAX_VALUE && dist.get(u)+weight<dist.get(v)) {
+	                    dist.put(v, dist.get(u)+weight);
+	                    Parent.put(e.Second,e.First);
+	                }
+	                 v = e.First._strUniqueID;
+	                 u = e.Second._strUniqueID;
+	                 if (dist.get(u)!=Integer.MAX_VALUE && dist.get(u)+weight<dist.get(v)) { 
+		                    dist.put(v, dist.get(u)+weight); 
+		                    Parent.put(e.First,e.Second);
+
+	                 }
+
+	              
+	            } 
+	          
+	             
+	        } 
+	        
+	        Vector<Vector<PathSegment>> ANS = new Vector<Vector<PathSegment>>();
+	        Vector<Vertex> vv= this.vertices();
+	        for(Vertex v :vv) {
+	        	Stack<Vertex> st = new Stack();
+	        	while(v!=null && !v._strUniqueID.toString().equals(strStartVertexUniqueID.toString())) {
+	        		//System.out.print(v._strUniqueID+" ");
+	        		st.push(v);
+	        		v=Parent.get(v);
+	        	}
+	        	
+	        	if(v==null)
+	        		continue;
+	        	st.push(v);
+	        	Vector<PathSegment>temp = new Vector<>();
+	        	while(st.size()>=2) {
+	        		Vertex pop=st.pop();
+	        		Vertex peek=st.peek();
+	        		Edge e = get_Edge(pop,peek);
+//	        		System.out.println(pop._strUniqueID+" "+peek._strUniqueID+" "+e);
+	        		temp.add(new PathSegment(pop, e));
+	        		//System.out.println(pop._strUniqueID+" "+peek._strUniqueID);
+
+
+	        	}
+	        	if(st.size()>0)
+	        	temp.add(new PathSegment(st.pop(), null));
+		        ANS.add(temp);
+	        }
+	        
+	        for(Vector<PathSegment> ps:ANS) {
+	        	for(PathSegment s:ps) {
+	        		//System.out.println(s._edge);
+	        		if(s._edge!=null)
+	        		System.out.print(s._vertex._strUniqueID+" -> ");
+	        		else 
+		        	System.out.print(s._vertex._strUniqueID);
+
+	        	}
+	        	System.out.println();
+	        }
+	        
+	        
+
+	       return ANS;
+	}
+	
+	
+	public Vector<Vector<PathSegment>> findAllShortestPathsFW( ) throws GraphException {
+		int INF =1000000;
+		HashMap<pair, Integer> dist =new HashMap<pair, Integer>();
+		HashMap<pair, pair> next =new HashMap<pair, pair>();
+		Vector<Vertex> verties = this.vertices();
+		
+	        for (Vertex v1:verties)
+		        for (Vertex v2:verties) {
+		        	pair p =new pair(v1,v2);
+		        	dist.put(p, INF);
+		        	if(v1._strUniqueID.toString().equals(v2._strUniqueID.toString()))
+	        		{	
+	        			dist.put(p, 0);
+	        		}
+		        	//next.put(p, null);
+
+		        }
+	        
+	        	
+	        for (Vertex v1:verties) {
+	        	for(Edge e:Adj.get(v1)) {
+	        		Vertex v2 =e.Second; 
+	        		if(v1._strUniqueID.toString().equals(e.Second._strUniqueID.toString()))
+	        			v2=e.First;
+	        		
+	        		
+	        		for(pair p:dist.keySet()) {
+	        			if(p.v1._strUniqueID.toString().equals(v1._strUniqueID.toString()) && p.v2._strUniqueID.toString().equals(v2._strUniqueID.toString())) {
+	        				dist.put(p, e._nEdgeCost);
+	        				next.put( p ,new pair(v2,v2));
+	        			}
+	        			if(p.v2._strUniqueID.toString().equals(v1._strUniqueID.toString()) && p.v1._strUniqueID.toString().equals(v2._strUniqueID.toString())) {
+	        				dist.put(p, e._nEdgeCost);
+	        				next.put( p ,new pair(v1,v1));
+
+	        			}
+	        		}
+	        		
+	        		
+	        	}
+	        }
+	
+	 
+	        for (Vertex k :verties)
+	            for (Vertex i :verties)
+	                for (Vertex j :verties) {
+	                	int cost1=0;
+                		int cost2=0;
+                		int cost3=0;
+                		pair save1=null;
+                		pair save2=null;
+	                	for(pair p:dist.keySet()) {
+	                		
+	                		//i to k
+		        			if(p.v1._strUniqueID.toString().equals(i._strUniqueID.toString()) && p.v2._strUniqueID.toString().equals(k._strUniqueID.toString())) {
+		        				cost1=dist.get(p);
+		        				save2=p;
+		        			}
+		        			//k to j
+		        			if(p.v1._strUniqueID.toString().equals(k._strUniqueID.toString()) && p.v2._strUniqueID.toString().equals(j._strUniqueID.toString())) {
+		        				cost2=dist.get(p);
+		        			}
+		        			//i to j
+		        			if(p.v1._strUniqueID.toString().equals(i._strUniqueID.toString()) && p.v2._strUniqueID.toString().equals(j._strUniqueID.toString())) {
+		        				cost3=dist.get(p);
+		        				save1=p;
+		        			}
+		        		}
+	                	
+	                	if(cost1+cost2 <cost3) {
+//	                		System.out.print("cost "+ cost1+" "+cost2+" ");
+//		                	System.out.println(save1.v1._strUniqueID+" "+save1.v2._strUniqueID +" "+save2.v1._strUniqueID+" "+save2.v2._strUniqueID+" ");
+
+	                		dist.put(save1, cost1+cost2);
+	                		next.put(save1, save2);
+	                	}
+	                	
+	                	
+	                }
+	        
+	        Vector<Vector<PathSegment>> ANS = new Vector<Vector<PathSegment>>();
+
+	        for (pair p :next.keySet()) {
+	            	if(p.v1._strUniqueID.toString().equals(p.v2._strUniqueID.toString()))
+	            		continue;
+	            	
+	            	if(next.get(p)==null)
+	            		continue;
+
+	            
+
+	            	pair current=p;
+	            	Vertex source =current.v1;
+	            	Vertex destination =current.v2;
+
+	            	Stack <Vertex> st = new Stack();
+	            	ArrayList<Vertex>ans = new ArrayList<>();
+	            	Vector<PathSegment>temp = new Vector<>();
+
+	            	String result =(buildpath(ans,next,p,dist));
+	            	String[] IDS = result.split("\\s+");
+	            	ans.add(source);
+	            	for(int i=0;i<IDS.length;i+=2)
+	            		{
+	            			for(Vertex c :this.vertices()) {
+	            				if(c._strUniqueID.toString().equals(IDS[i])) {
+	            					ans.add(c);
+	            				}
+	            			}
+	            		}
+
+	            	
+	            	for(int i=0;i<ans.size()-1;i++) {
+	            		Vertex c1= ans.get(i);
+	            		Vertex c2 = ans.get(i+1);
+	            		Edge e = get_Edge(c1, c2);
+	            		PathSegment ps = new PathSegment(c1, e);
+	            		temp.add(ps);
+	            	}
+	            	temp.add(new PathSegment(ans.get(ans.size()-1), null));
+//	            	System.out.println(" "+ next.get(p).v1._strUniqueID+"   "+next.get(p).v2._strUniqueID );
+//	            	System.out.println();
+////
+//	            	st.push(source);//3
+//	            	while(current!=null && !current.v1._strUniqueID.toString().equals(current.v2._strUniqueID.toString())) {
+//	            		current=next.get(current);
+//	            		Vertex r =current.v2;
+//	            		current =getpair(r, destination, dist);
+//	            		//System.out.println(current.v1._strUniqueID+" "+" "+current.v2._strUniqueID);
+//	            		st.push(current.v1);
+//
+//	            		
+//	            	}
+//	            	
+//	            	if(current==null) {
+//	            		st.clear();
+//	            		continue;
+//	            	}else {
+//	            		//st.push(source);
+//
+//	            	}
+//	            	while(st.size()>0) {
+//	            		System.out.print(st.pop()._strUniqueID+" ");
+//	            	}
+//	            	System.out.println();
+    	
+//	            	Vector<PathSegment>temp = new Vector<>();
+//		        	while(st.size()>=2) {
+//		        		Vertex pop=st.pop();
+//		        		Vertex peek=st.peek();
+//		        		Edge e = get_Edge(pop,peek);
+//		        		temp.add(new PathSegment(pop, e));
+//		        	}
+//		        	if(st.size()>0)
+//		        		temp.add(new PathSegment(st.pop(), null));
+	            	//System.out.println(temp.size());
+//			        
+			        ANS.add(temp);
+		        
+
+	            }
+	        
+	        for(Vector<PathSegment> ps:ANS) {
+	        	for(PathSegment s:ps) {
+	        		if(s._edge!=null)
+	        		System.out.print(s._vertex._strUniqueID+" -> ");
+	        		else 
+		        	System.out.print(s._vertex._strUniqueID+" ");
+
+	        	}
+	        	System.out.println();
+	        }
+	        
+	        
+	        
+
+	        
+
+	        return ANS;
+	}
+	
+	
+
+	private String buildpath(ArrayList<Vertex> ans, HashMap<pair, pair> next, pair p, HashMap<pair, Integer> dist) {
+		if(p.v1._strUniqueID.toString().equals(p.v2._strUniqueID.toString())) {
+			return p.v1._strUniqueID+" ";
+		}
+		Vertex source =p.v1;
+		Vertex destination =p.v2;
+		pair p2=next.get(p);
+		Vertex r =p2.v2;
+		pair p3 =getpair(r, destination, dist);
+		
+//		System.out.println(p.v1._strUniqueID+" "+p.v2._strUniqueID+"( "+p2.v1._strUniqueID+" "+p2.v2._strUniqueID+" )"+" ("+p3.v1._strUniqueID+" "+p3.v2._strUniqueID+"");
+//		Vertex r =current.v2;
+//		current =getpair(r, destination, dist);
+//		//System.out.println(current.v1._strUniqueID+" "+" "+current.v2._strUniqueID);
+
+		String ans1=buildpath(ans, next, p2, dist);
+		String ans2=buildpath(ans, next, p3, dist);
+		//System.out.println(ans1+" "+ans2+" "+p.v1._strUniqueID+" "+p.v2._strUniqueID);
+
+		return ans1+" "+ans2;
+		
+		
+	}
+
+	private void printResult(HashMap<pair, pair> next, HashMap<pair, Integer> dist) throws GraphException {
+		Vector<Vertex> vv= this.vertices();
+		for (Vertex v1:vv) {
+			for (Vertex v2:vv) {
+				if (!v1._strUniqueID.toString().equals(v2._strUniqueID.toString())) {
+					Vertex u = v1;
+					Vertex v = v2;
+					pair p =getpair(u,v,dist);// my pair
+					if(p==null)continue;
+					String path = ""+u._strUniqueID+" ";
+					do {
+					
+						p = next.get(p);
+						if(p==null)break;
+						//System.out.println(p);
+						path += " -> " + p.v2._strUniqueID;
+					} while (p!=null && !p.v1._strUniqueID.toString().equals(p.v2._strUniqueID.toString()) && ! p.v2._strUniqueID.toString().equals(v._strUniqueID.toString()));
+					System.out.println(path);
+					path="";
+				}
+			}
+		}
+	}
+	
+
+	private pair getpair(Vertex u, Vertex v, HashMap<pair, Integer> dist) {
+		for(pair p :dist.keySet())
+			if(p.v1._strUniqueID.toString().equals(u._strUniqueID.toString())&& p.v2._strUniqueID.toString().equals(v._strUniqueID.toString()))
+				return p ;
+		return null;
+	}
+
+	private Edge get_Edge(Vertex pop, Vertex peek) throws GraphException {
+		Edge ans = null; 
+		int cost=100000;
+	
+		for(Edge e:this.edges()) {
+//			System.out.println(e.First._strUniqueID+" "+e.Second._strUniqueID);
+			//System.out.println(pop._strUniqueID+" "+peek._strUniqueID);
+
+			if(e.First._strUniqueID.toString().equals(peek._strUniqueID.toString()) && e.Second._strUniqueID.toString().equals(pop._strUniqueID.toString())) {
+				if(e._nEdgeCost<cost) {
+					ans=e;
+					cost=e._nEdgeCost;
+				}
+			}
+			if(e.Second._strUniqueID.toString().equals(peek._strUniqueID.toString()) && e.First._strUniqueID.toString().equals(pop._strUniqueID.toString())) {
+				if(e._nEdgeCost<cost) {
+					ans=e;
+					cost=e._nEdgeCost;
+				}
+			}
+	}
+		return ans;
+	}
 
 	public Graph() {
 		Adj=new HashMap<Vertex, LinkedList<Edge>>();
@@ -510,60 +917,7 @@ public class Graph {
 
 	}
 	public static void main(String[] args)throws GraphException {
-//		Graph g= new Graph();
-//		Vertex v1 = new Vertex(new StringBuffer("1"), new StringBuffer("1"));
-//		Vertex v2 = new Vertex(new StringBuffer("2"), new StringBuffer("1"));
-//		Vertex v3 = new Vertex(new StringBuffer("3"), new StringBuffer("1"));
-//		Vertex v4 = new Vertex(new StringBuffer("4"), new StringBuffer("1"));
-////		v1._nX=5;
-////		v2._nX=2;
-////		v3._nX=10;
-////		v4._nX=7;
-////		Vertex[]a = {v1,v2,v3,v4};
-////		Arrays.sort(a);
-////		for(int i=0;i<4;i++)
-////			System.out.println(a[i]._strUniqueID);
-//
-//		g.show();
-		Graph g = new Graph( );
-		Vertex v1 = new Vertex(new StringBuffer("1") ,new StringBuffer("1" ),1,9);
-		Vertex v2 = new Vertex(new StringBuffer("2") ,new StringBuffer("2" ),0,2);
-		Vertex v3 = new Vertex(new StringBuffer("3") ,new StringBuffer("3" ),3,4);
-		Vertex v4 = new Vertex(new StringBuffer("4") ,new StringBuffer("4" ),5,10);
-		Vertex v5 = new Vertex(new StringBuffer("5") ,new StringBuffer("5" ),5,10);
-		
-//		v1.set_Cordinates(1, 9);
-//		v2.set_Cordinates(0, 2);
-//		v3.set_Cordinates(3, 4);
-//		v4.set_Cordinates(5, 10);
-//		v5.set_Cordinates(6, 10);
 
-		
-		g.addvertex(v1);
-		g.addvertex(v2);
-		g.addvertex(v3);
-		g.addvertex(v4);
-		g.addvertex(v5);
-
-//		g.insertVertex(new StringBuffer("2"), new StringBuffer("2") );
-//		g.insertVertex(new StringBuffer("3"), new StringBuffer("3"));
-//		g.insertVertex(new StringBuffer("4"), new StringBuffer("4") );
-//		g.insertVertex(new StringBuffer("5"), new StringBuffer("5") );
-		g.insertEdge(new StringBuffer("1"),new StringBuffer("4"),new StringBuffer("5"),new StringBuffer("5"),5);
-		//g.insertEdge(new StringBuffer("1"),new StringBuffer("2"),new StringBuffer("2"),new StringBuffer("2"), 2);
-		g.insertEdge(new StringBuffer("2"), new StringBuffer("3"),new StringBuffer("14"),new StringBuffer("14"),14);
-		//g.insertEdge(new StringBuffer("2"), new StringBuffer("4"),new StringBuffer("1"),new StringBuffer("5"),5);
-		//g.insertEdge(new StringBuffer("2"), new StringBuffer("5"),new StringBuffer("4"),new StringBuffer("4"),4);
-		g.insertEdge(new StringBuffer("4"), new StringBuffer("5"), new StringBuffer("58"), new StringBuffer("58"), 58);
-		//g.insertEdge(new StringBuffer("3"), new StringBuffer("5"), new StringBuffer("34"), new StringBuffer("34"), 34);
-		//g.dfs(strStartVertexUniqueID, visitor);
-		//g.bfs(new StringBuffer("3"));
-		//Vector<PathSegment> v = (g.pathDFS(new StringBuffer("1"), new StringBuffer("3")));
-//		for(PathSegment ps :v)
-//			System.out.println(ps._vertex._strUniqueID);
-		Vertex[] closestPair = g.closestPair();
-		System.out.println(closestPair[0]._strUniqueID+" "+closestPair[1]._strUniqueID);
-		//g.show();
 
 		
 	}
@@ -587,3 +941,4 @@ public class Graph {
 	 
 	
 }
+
